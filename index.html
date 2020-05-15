@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Projet Thesaurus pa Maxime Gautier</title>
+    
+    <script type="text/javascript" src="WebGL/WebGl.js"></script>
+    <script type="text/javascript" src="WebGL/ShaderCouleursTextures.js"></script>
+    <script type="text/javascript" src="WebGL/glMatrix-0.9.5.min.js"></script>
+    <script type="text/javascript" src="WebGL/Transformations.js"></script>
+    <script type="text/javascript" src="WebGL/Camera.js"></script>
+
+    <script type="text/javascript" src="Data/LevelGenerator.js"></script>
+    <script type="text/javascript" src="Data/Controller.js"></script>
+
+    <script type="text/javascript" src="3D/Shapes.js"></script>
+    <script type="text/javascript" src="3D/Drawing.js"></script>
+    <script type="text/javascript" src="3D/Vertex.js"></script>
+
+    <script type="text/javascript" src="Config.js"></script>
+
+    <script type="text/javascript">
+
+        var drawing = null; 
+        var Index = 
+        {   
+            initiated: false,
+        };  
+
+        var controller = new Controller();
+
+        var Config = ConfigurationFile;
+
+        function Initialise()
+        {
+            drawing = new Drawing(document.getElementById('mainCanvas'), Config)
+            drawing.Clear();
+
+            Index.Map = new Level(1);
+            drawing.scene = Index.Map.content;
+            Index.initiated = true;
+
+            //drawing.Draw();
+            //dessiner(drawing.webgl, drawing.shader, Index.Map.content)
+        }
+
+        function Keydown()
+        {
+            controller.KeyChange(event.keyCode, 1)
+        }
+
+        function KeyUp()
+        {
+            controller.KeyChange(event.keyCode, 0)
+        }
+
+    </script>
+</head>
+
+<body onload="Initialise();"> 
+    <div>
+        <canvas id="mainCanvas" width="1" height="1" tabIndex="1",
+         onkeydown="Keydown();", onkeyup="KeyUp();">
+            Votre navigateur ne supporte pas la balise canvas
+        </canvas>
+        <div>
+            Options
+        </div>
+    </div>
+
+</body>
+</html>
