@@ -1,0 +1,26 @@
+body {
+  margin: 0;
+}
+
+canvas {
+  cursor: none;
+}
+
+#infobox
+{
+  height:50px;
+  width: 1200px;
+  background-color:yellow;
+  border: solid 1px black;
+  text-align: center;   
+}
+
+#end
+{
+  height:100%;
+  width: 100%;
+  background-color:yellow;
+  border: solid 1px black;
+  text-align: center;  
+  float: center;
+}

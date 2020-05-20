@@ -1,73 +1,57 @@
 <!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
-<head>
+<html lang="en">
+  <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Projet Thesaurus pa Maxime Gautier</title>
-    
-    <script type="text/javascript" src="WebGL/WebGl.js"></script>
-    <script type="text/javascript" src="WebGL/ShaderCouleursTextures.js"></script>
-    <script type="text/javascript" src="WebGL/glMatrix-0.9.5.min.js"></script>
-    <script type="text/javascript" src="WebGL/Transformations.js"></script>
-    <script type="text/javascript" src="WebGL/Camera.js"></script>
+    <title>Thesaurus par Maxime Gautier</title>
+    <link rel="stylesheet" href="./index.css" />
+  </head>
+  <body>
 
-    <script type="text/javascript" src="Data/LevelGenerator.js"></script>
-    <script type="text/javascript" src="Data/Controller.js"></script>
-
-    <script type="text/javascript" src="3D/Shapes.js"></script>
-    <script type="text/javascript" src="3D/Drawing.js"></script>
-    <script type="text/javascript" src="3D/Vertex.js"></script>
-
-    <script type="text/javascript" src="Config.js"></script>
-
-    <script type="text/javascript">
-
-        var drawing = null; 
-        var Index = 
-        {   
-            initiated: false,
-        };  
-
-        var controller = new Controller();
-
-        var Config = ConfigurationFile;
-
-        function Initialise()
-        {
-            drawing = new Drawing(document.getElementById('mainCanvas'), Config)
-            drawing.Clear();
-
-            Index.Map = new Level(1);
-            drawing.scene = Index.Map.content;
-            Index.initiated = true;
-
-            //drawing.Draw();
-            //dessiner(drawing.webgl, drawing.shader, Index.Map.content)
-        }
-
-        function Keydown()
-        {
-            controller.KeyChange(event.keyCode, 1)
-        }
-
-        function KeyUp()
-        {
-            controller.KeyChange(event.keyCode, 0)
-        }
-
-    </script>
-</head>
-
-<body onload="Initialise();"> 
-    <div>
-        <canvas id="mainCanvas" width="1" height="1" tabIndex="1",
-         onkeydown="Keydown();", onkeyup="KeyUp();">
-            Votre navigateur ne supporte pas la balise canvas
-        </canvas>
-        <div>
-            Options
-        </div>
+    <div id='infobox'>
+      <label id='level'>Niveau 1</label>
+      <label id='score'>Score: 300</label>
+      <label id='time'>Temps: 01:00</label>
+      <label id='digger'>Creuseurs: 4</label>
     </div>
 
-</body>
+    <div id='game'>
+    <canvas id="glCanvas"></canvas>
+    <div id='optionsbox'>
+      
+    </div>
+    
+    <div id='dataBox'>
+      <label id='camPos'>Cam: [0,0]</label>
+    </div>
+    </div>
+
+    <script type="text/javascript" src="./glMatrix-0.9.5.min.js"></script>
+
+    <script type="text/javascript" src="./WebGL/InputManager.js"></script>
+    <script type="text/javascript" src="./WebGL/Shaders/Shader.js"></script>
+    <script type="text/javascript" src="./WebGL/Components/Component.js"></script>
+    <script type="text/javascript" src="./WebGL/Components/Mesh.js"></script>
+    <script type="text/javascript" src="./WebGL/Texture.js"></script>
+    <script type="text/javascript" src="./WebGL/Scene.js"></script>
+    <script type="text/javascript" src="./WebGL/Shaders/TextureShader.js"></script>
+    <script type="text/javascript" src="./WebGL/Components/Camera.js"></script>
+    <script type="text/javascript" src="./WebGL/Shaders/ColorShader.js"></script>
+    <script type="text/javascript" src="./WebGL/Entity.js"></script>
+    <script type="text/javascript" src="./WebGL/Components/RotatingComponent.js"></script>
+    <script type="text/javascript" src="./WebGL/Components/CameraController.js"></script>
+    <script type="text/javascript" src="./WebGL/Components/Cube.js"></script>
+    
+    <script type="text/javascript" src="./Scenes/SoundHandler.js"></script>
+    <script type="text/javascript" src="./Scenes/TexturePresets.js"></script>
+
+    <script type="text/javascript" src="./Scenes/Textures/BlockTexture.js"></script>
+    <script type="text/javascript" src="./Scenes/Textures/BoxTexture.js"></script>
+    <script type="text/javascript" src="./Scenes/Textures/FloorTexture.js"></script>
+    <script type="text/javascript" src="./Scenes/Textures/WallTexture.js"></script>
+
+    <script type="text/javascript" src="./Scenes/Level1.js"></script>
+    <script type="text/javascript" src="./Scenes/Map.js"></script>
+    <script type="text/javascript" src="./Scenes/Main.js"></script>
+
+  </body>
 </html>
