@@ -76,19 +76,22 @@ function wait(seconds, func)
 
 function passTime(seconds)
 {
-  if(paused)
+  if(!paused)
   {
-    pausedTime += seconds;
-    if(pausedTime > 1)
+    if(view2)
     {
-      pausedTime -= 1;
-      updateScore(-10)
-      if(score < 10)
-        map.mapView(false);
+      pausedTime += seconds;
+      if(pausedTime > 1)
+      {
+        pausedTime -= 1;
+        updateScore(-10)
+        if(score < 10)
+          map.mapView(false);
+      }
     }
+    else if (Math.ceil(temps + seconds) != temps)
+      updateTime(seconds)
   }
-  else if (Math.ceil(temps + seconds) != temps)
-    updateTime(seconds)
 
   let i = 0;
   while(i < tasks.length)

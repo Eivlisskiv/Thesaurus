@@ -202,6 +202,7 @@ proto.gameFinished = function()
 
 proto.fail = function()
 {
+	temps = 60
 	this.camControl.enabled = false;
 	soundHandler.stop('start')
 	
@@ -239,7 +240,6 @@ proto.win = function()
 proto.restart = function(level, win)
 {	
 	this.camControl.entity.position = vec3.fromValues(15.5, 0, 15.5);
-	updateScore(win ? 10 * Math.floor(temps) : -200)
 	temps = 60;
 	updateLevel(level)
 	diggers = 0;
@@ -344,6 +344,7 @@ proto.mapView = function(opened)
 	this.ceilling.visible = !opened;
 	this.camControl.enabled = !opened;
 	this.treasure.visible = !opened;
+	view2 = opened;
 
 	if(opened)
 	{
