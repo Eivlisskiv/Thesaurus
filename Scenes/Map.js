@@ -35,7 +35,7 @@ function Map(gl, scene, textures)
 
 	]
 
-	this.map = { }
+	this.mapEntity = new Entity();
 
 	this.loading = 0;
 	this.loaded = 0;
@@ -141,7 +141,7 @@ proto.spawnTreasure = function()
 	if(this.treasure)
 	{
 		this.treasureSpawn = [x, y]
-		this.treasure.position = vec3.fromValues(x * this.size, -0.425, y * this.size + (this.size/2))
+		this.treasure.position = vec3.fromValues(x * this.size + (this.size/2), -0.425, y * this.size + (this.size/2))
 	}
 	else
 		this.createTreasure(x, y)
@@ -211,7 +211,7 @@ proto.fail = function()
 
 	soundHandler.play('failed')
 	updateScore(-200)
-	wait(2, function() { 
+	wait(4, function() { 
 		map.restart(currentLevel, false)
 	})
 }
@@ -223,7 +223,7 @@ proto.win = function()
 	if(currentLevel == 10)
 	{
 		wait(2, function() {
-			game.gameFinished()
+			map.gameFinished()
 		})
 		
 		return;
@@ -239,7 +239,9 @@ proto.win = function()
 
 proto.restart = function(level, win)
 {	
-	this.camControl.entity.position = vec3.fromValues(15.5, 0, 15.5);
+	this.camControl.reset(vec3.fromValues(15.5, 0, 15.5))
+	//this.camControl.entity.position = vec3.fromValues(15.5, 0, 15.5);
+
 	temps = 60;
 	updateLevel(level)
 	diggers = 0;
@@ -285,11 +287,18 @@ proto.wallStatus = function(x, y, visible)
 	this.grid[index] = visible ? 2 : 5;
 }
 
+proto.getTileType = function(x, y)
+{
+	return this.grid[Math.floor(x) + (Math.floor(y) * 31)]
+}
+
 proto.accessible = function(cam, dir)
 {	
-	var offset = 5;
+	var offset = 0.12;
+
 	var currentGrid = [Math.floor(cam.position[0]), Math.floor(cam.position[2])]
-	var targetGrid = [Math.floor(cam.position[0] + dir[0] * offset), Math.floor(cam.position[2] + dir[2] * offset)]
+	var targetGrid = [Math.floor(cam.position[0] + dir[0] + (offset * Math.fc(dir[0])) ),
+	 				Math.floor(cam.position[2] + dir[2] + (offset * Math.fc(dir[2])) )]
 
 	if(currentGrid[0] == 15 && currentGrid[1] == 12)
 		this.wallStatus(15, 13, true);
@@ -301,12 +310,14 @@ proto.accessible = function(cam, dir)
 	
 	var targetGridType = this.grid[targetGrid[0] + (targetGrid[1] * 31)]
 
-	if(targetGridType == 2 || targetGridType == 1) return vec3.fromValues(0, 0, 0);
-	/*else if (currentGrid[0] != targetGrid[0] && cam.position[0] + targetGrid[0] > dir[0])
-		return vec3.fromValues(cam.position[0] + targetGrid[0], 0, dir[2])
-	else if (currentGrid[1] != targetGrid[1] && cam.position[1] + targetGrid[1] > dir[2])
-		return vec3.fromValues(dir[0], 0, cam.position[1] + targetGrid[1])
-	//*/
+	if(targetGridType == 2 || targetGridType == 1) 
+	{
+		var x = targetGrid[0] - currentGrid[0];
+		var z = targetGrid[1] - currentGrid[1];
+
+		dir[0] = x != 0 ? 0 : dir[0];
+		dir[2] = z != 0 ? 0 : dir[2];
+	}
 	return dir;
 }
 

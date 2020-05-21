@@ -25,6 +25,7 @@ InputManager.prototype.keyDownHandler = function(event)
   {
     soundHandler.play('start')
     this.firstInput = true;
+    paused = false;
   }
   if(event.keyCode == 32 && this.map)
     this.map.dig()

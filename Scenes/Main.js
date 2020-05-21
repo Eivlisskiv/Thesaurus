@@ -62,10 +62,9 @@ function run() {
     if(!end)
       requestAnimationFrame(render);
   }
-
     requestAnimationFrame(render);
     inputManager.map = map;
-    paused = false;
+    
     soundHandler.play('start')
 }
 
@@ -76,10 +75,9 @@ function wait(seconds, func)
 
 function passTime(seconds)
 {
-  if(!paused)
+
+  if(view2)
   {
-    if(view2)
-    {
       pausedTime += seconds;
       if(pausedTime > 1)
       {
@@ -88,10 +86,10 @@ function passTime(seconds)
         if(score < 10)
           map.mapView(false);
       }
-    }
-    else if (Math.ceil(temps + seconds) != temps)
-      updateTime(seconds)
   }
+  else if (!paused && Math.ceil(temps + seconds) != temps)
+    updateTime(seconds)
+
 
   let i = 0;
   while(i < tasks.length)
